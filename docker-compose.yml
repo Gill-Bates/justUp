@@ -1,6 +1,6 @@
 services:
   justup:
-    image: gill-bates/justup:latest
+    image: giiibates/justup:latest
     container_name: justup
     restart: always
     security_opt:

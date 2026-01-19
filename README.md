@@ -4,9 +4,9 @@
   <img src="static/img/justup.png" alt="justUp Logo" width="200">
 </p>
 
-[![Docker](https://img.shields.io/badge/Docker-gill--bates%2Fjustup-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/gill-bates/justup)
+[![Docker](https://img.shields.io/badge/Docker-gill--bates%2Fjustup-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/giiibates/justup)
 [![License](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.1.0-blue.svg)](https://github.com/gill-bates/justup/releases)
+[![Version](https://img.shields.io/badge/Version-1.1.0-blue.svg)](https://github.com/giiibates/justup/releases)
 
 Seriously – why another monitoring tool?
 
@@ -132,7 +132,7 @@ docker run -d --name justup \
   -e UPMON_ENCRYPTION_KEY="<YOUR_FERNET_KEY>" \
   -v "$PWD/justup-data:/app/data" \
   --restart unless-stopped \
-  gill-bates/justup:latest
+  giiibates/justup:latest
 ```
 
 Open:
@@ -154,7 +154,7 @@ Open:
 ```yaml
 services:
   justup:
-    image: gill-bates/justup:latest
+    image: giiibates/justup:latest
     container_name: justup
     restart: unless-stopped
     ports:
