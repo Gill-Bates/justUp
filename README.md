@@ -1,7 +1,11 @@
 # justUp
 
+<p align="center">
+  <img src="static/img/justup.png" alt="justUp Logo" width="200">
+</p>
+
 [![Docker](https://img.shields.io/badge/Docker-gill--bates%2Fjustup-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/gill-bates/justup)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-1.1.0-blue.svg)](https://github.com/gill-bates/justup/releases)
 
 Seriously – why another monitoring tool?
