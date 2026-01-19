@@ -1,10 +1,19 @@
 # justUp
 
-justUp is a lightweight uptime monitor with a web UI, alerting, and PDF reports.
+Seriously?! Why another monitoring tool?
 
-This README is written for users who run justUp via Docker (Docker Hub). No local Python setup required.
+The answer is simple:
+I was looking for an easy-to-use monitoring tool for websites and endpoints that could run in Docker.
 
-## Why justUp (USP)
+The following requirements were essential:
+- No external dependencies on Postgres, Influx, etc.
+- Runs entirely in Docker, comes with everything it needs
+- A sleek dashboard with meaningful metrics, without Grafana overkill
+- Reliable alerting (currently Signal integrated)
+- Measurement points in a resampled time series database
+- Professional PDF reports
+
+## All this is justUp!
 
 - Signal integration for alerts/notifications
 - Quality Score to track overall network/service quality at a glance
@@ -19,6 +28,34 @@ This README is written for users who run justUp via Docker (Docker Hub). No loca
 - Alerts + recipients
 - Traceroute (UI + PDF map)
 - PDF reports
+
+## FAQ
+
+<details>
+<summary><strong>What is the Quality Score?</strong></summary>
+
+![Quality Score](static/img/quality.png)
+
+Suppose your monitor's Internet connection is disrupted or even fails. Virtually all monitoring solutions evaluate the failure of the endpoint.
+
+justUp! is different! justUp! continuously measures its own Internet quality using a sophisticated and advanced algorithm. Various endpoints are weighted so cleverly that objective connection quality can be derived from this. If the connection quality falls below a certain threshold, the measuring point is marked as "unknown."
+
+</details>
+
+<details>
+<summary><strong>What is Resampling?</strong></summary>
+
+![Resampling](static/img/resampling.png)
+
+Instead of storing every single measurement forever and filling up gigabytes of database space, measurement points are resampled over time.
+
+**What does that mean?**
+
+Recent data is stored with full detail. As data gets older, justUp! automatically keeps fewer, representative points that preserve trends, averages, and extremes. You still see what happened, but without wasting storage on unnecessary granularity.
+
+**Result:** Long-term history stays meaningful, fast, and compact — without manual cleanup or data loss where it matters.
+
+</details>
 
 ## Requirements
 
@@ -36,7 +73,7 @@ docker run --rm python:3.12-slim \
 
 2) Run the container
 
-Replace the image name with your Docker Hub image (example: `YOUR_DOCKERHUB_USER/justup:latest`).
+Run the container:
 
 ```bash
 docker run -d --name justup \
@@ -48,7 +85,7 @@ docker run -d --name justup \
   -e UPMON_ENCRYPTION_KEY="<YOUR_FERNET_KEY>" \
   -v "$PWD/justup-data:/app/data" \
   --restart unless-stopped \
-  YOUR_DOCKERHUB_USER/justup:latest
+  gill-bates/justup:latest
 ```
 
 Open:
@@ -70,7 +107,7 @@ Create a `docker-compose.yml` like this:
 ```yaml
 services:
   justup:
-    image: YOUR_DOCKERHUB_USER/justup:latest
+    image: gill-bates/justup:latest
     container_name: justup
     restart: unless-stopped
     ports:
@@ -126,11 +163,10 @@ If you don’t mount `/app/data`, you’ll lose everything on container recreati
 |---|---:|---|---|
 | `UPMON_ENCRYPTION_KEY` | yes | — | Encrypts secrets at rest (Fernet) |
 | `LOG_LEVEL` | no | `INFO` | Logging verbosity |
-| `TZ` | no | `UTC` | Container timezone |
 | `PUID` / `PGID` | no | `1000` | File ownership for `/app/data` |
 | `JUSTUP_HOST` | no | `0.0.0.0` | Bind address |
 | `JUSTUP_PORT` | no | `8080` | Listen port |
-| `UPMON_QUALITY_TARGETS` | no | — | Comma-separated hosts used by the “quality probe” |
+| `UPMON_QUALITY_TARGETS` | no | `1.1.1.1,8.8.8.8,9.9.9.9,www.de-cix.net,cloudflare.com` | Comma-separated hosts used by the “quality probe” |
 
 ## Troubleshooting
 
