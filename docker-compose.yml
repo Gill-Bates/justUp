@@ -1,0 +1,31 @@
+services:
+  justup:
+    image: gill-bates/justup:latest
+    container_name: justup
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - LOG_LEVEL=INFO
+      - UPMON_DATA_DIR=data/
+      - UPMON_DB_PATH=data/sqlite/app.sqlite3
+      - UPMON_TSDB_DIR=data/tsdb
+      - UPMON_QUALITY_TARGETS=1.1.1.1,8.8.8.8,9.9.9.9,www.de-cix.net,cloudflare.com
+      - UPMON_ENCRYPTION_KEY=""
+    volumes:
+      - /opt/docker/justup:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      myNetwork:
+        ipv4_address: 10.10.0.2
+        #ipv6_address: 2a02: ...
+networks:
+  myNetwork:
+    external: true
