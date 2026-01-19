@@ -1,8 +1,12 @@
 # justUp
 
+[![Docker](https://img.shields.io/badge/Docker-gill--bates%2Fjustup-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/gill-bates/justup)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)](https://github.com/gill-bates/justup/releases)
+
 Seriously?! Why another monitoring tool?
 
-The answer is simple:
+<strong>The answer is simple:</strong>
 I was looking for an easy-to-use monitoring tool for websites and endpoints that could run in Docker.
 
 The following requirements were essential:
@@ -78,7 +82,6 @@ Run the container:
 ```bash
 docker run -d --name justup \
   -p 8080:8080 \
-  -e TZ=UTC \
   -e PUID=1000 \
   -e PGID=1000 \
   -e LOG_LEVEL=INFO \
@@ -113,7 +116,6 @@ services:
     ports:
       - "8080:8080"
     environment:
-      TZ: "UTC"
       PUID: "1000"
       PGID: "1000"
       LOG_LEVEL: "INFO"
