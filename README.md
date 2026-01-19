@@ -2,82 +2,122 @@
 
 [![Docker](https://img.shields.io/badge/Docker-gill--bates%2Fjustup-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/gill-bates/justup)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)](https://github.com/gill-bates/justup/releases)
+[![Version](https://img.shields.io/badge/Version-1.1.0-blue.svg)](https://github.com/gill-bates/justup/releases)
 
-Seriously?! Why another monitoring tool?
+Seriously – why another monitoring tool?
 
-<strong>The answer is simple:</strong>
-I was looking for an easy-to-use monitoring tool for websites and endpoints that could run in Docker.
+**Because I wanted something that actually fits.**
 
-The following requirements were essential:
-- No external dependencies on Postgres, Influx, etc.
-- Runs entirely in Docker, comes with everything it needs
-- A sleek dashboard with meaningful metrics, without Grafana overkill
-- Reliable alerting (currently Signal integrated)
-- Measurement points in a resampled time series database
-- Professional PDF reports
+justUp is a self-contained, Docker-first monitoring solution for websites and endpoints, designed to be simple to operate, efficient in storage, and professional in output — without external databases, agents, or Grafana stacks.
 
-## All this is justUp!
+---
 
-- Signal integration for alerts/notifications
-- Quality Score to track overall network/service quality at a glance
-- High-quality PDF reports (charts + traceroute map) for audits and sharing
-- Integrated traceroute (UI + PDF) to visualize the network path
-- Fully responsive web UI (works well on desktop, tablet, mobile)
+## What makes justUp different
 
-## What you get
+- **Truly self-contained**  
+  No Postgres, no InfluxDB, no Redis. justUp ships with its own SQLite + resampled TSDB and runs as a single container.
 
-- Checks: HTTP, Ping, TCP port, TLS certificate expiry
-- Dashboard + charts
-- Alerts + recipients
-- Traceroute (UI + PDF map)
-- PDF reports
+- **Standalone binary**  
+  Built with Nuitka. No Python runtime, no pip, no virtualenv in production.
 
-## FAQ
+- **Server-rendered UI (no SPA)**  
+  HTMX-based, fast, predictable, and SEO/ops-friendly. No React/Vue overhead.
 
-<details>
-<summary><strong>What is the Quality Score?</strong></summary>
+- **Meaningful metrics, not noise**  
+  One primary uptime signal per target, with auxiliary checks for context.
 
-![Quality Score](static/img/quality.png)
+- **Professional reporting**  
+  High-quality PDF reports with charts, downtime tables, and traceroute maps.
 
-Suppose your monitor's Internet connection is disrupted or even fails. Virtually all monitoring solutions evaluate the failure of the endpoint.
+---
 
-justUp! is different! justUp! continuously measures its own Internet quality using a sophisticated and advanced algorithm. Various endpoints are weighted so cleverly that objective connection quality can be derived from this. If the connection quality falls below a certain threshold, the measuring point is marked as "unknown."
+## Features
 
-</details>
+### Monitoring & Checks
+- HTTP (HEAD)
+- Ping (ICMP)
+- TCP port checks
+- TLS certificate expiration
 
-<details>
-<summary><strong>What is Resampling?</strong></summary>
+> Uptime is derived from **exactly one primary check** per target  
+> (HTTP → Ping → TCP, in that order). Other checks provide context, not ambiguity.
 
-![Resampling](static/img/resampling.png)
+---
 
-Instead of storing every single measurement forever and filling up gigabytes of database space, measurement points are resampled over time.
+### Dashboard & UI
+- Clean, responsive web UI (desktop, tablet, mobile)
+- Grouped targets with live status
+- Lazy-loaded metrics (no heavy queries on page load)
+- Optional UTC display for consistent ops views
 
-**What does that mean?**
+---
 
-Recent data is stored with full detail. As data gets older, justUp! automatically keeps fewer, representative points that preserve trends, averages, and extremes. You still see what happened, but without wasting storage on unnecessary granularity.
+### Alerts & Notifications
+- Reliable alerting with escalation support
+- Signal integration (extensible by design)
+- Recipients and per-target routing
+- Acknowledgement workflow
 
-**Result:** Long-term history stays meaningful, fast, and compact — without manual cleanup or data loss where it matters.
+---
 
-</details>
+### Quality Score (Monitoring the Monitor)
+justUp continuously evaluates **its own Internet connection quality** using a weighted set of external probe targets.
+
+If the monitoring environment itself becomes unreliable:
+- Targets are marked as `unknown`
+- False positives are avoided
+- Overall trust in alerts is preserved
+
+This is not just a score — it is a **quality gate** for monitoring integrity.
+
+---
+
+### Time Series Database with Resampling
+Instead of storing raw data forever:
+
+- Recent data: full resolution
+- Older data: automatically resampled
+- Trends, averages, and extremes preserved
+- Storage stays compact and fast
+
+No manual cleanup. No data loss where it matters.
+
+---
+
+### Traceroute (UI + PDF)
+- On-demand traceroute directly from the monitor
+- Offline GeoIP (no external lookups)
+- Interactive UI map
+- High-resolution PDF rendering with controlled auto-zoom
+
+---
+
+### PDF Reports
+- Charts, uptime statistics, downtime history
+- Embedded traceroute maps
+- Sync and async generation
+- Rate-limited heavy operations
+- Suitable for audits, customers, and documentation
+
+---
 
 ## Requirements
 
-- Docker Engine (and optionally Docker Compose)
-- A persistent directory/volume for `/app/data`
+- Docker Engine (Docker Compose recommended)
+- Persistent volume for `/app/data`
 
-## Quick start (Docker)
+---
 
-1) Create an encryption key (required)
+## Quick Start (Docker)
+
+### 1) Generate encryption key (required)
 
 ```bash
 docker run --rm python:3.12-slim \
   python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
 ```
 
-2) Run the container
-
-Run the container:
+### 2) Run container
 
 ```bash
 docker run -d --name justup \
@@ -93,19 +133,19 @@ docker run -d --name justup \
 
 Open:
 
-- UI: `http://localhost:8080/`
-- Health: `http://localhost:8080/health`
+- UI: http://localhost:8080/
+- Health: http://localhost:8080/health
 
-## Default login
+### Default Login
 
 - Username: `admin`
 - Password: `admin`
 
-Change the password immediately after first login.
+> **Change the password immediately after first login.**
+
+---
 
 ## Docker Compose (recommended)
-
-Create a `docker-compose.yml` like this:
 
 ```yaml
 services:
@@ -120,7 +160,6 @@ services:
       PGID: "1000"
       LOG_LEVEL: "INFO"
       UPMON_ENCRYPTION_KEY: "<YOUR_FERNET_KEY>"
-      # Optional paths (defaults are fine when you mount /app/data)
       UPMON_DATA_DIR: "data/"
       UPMON_DB_PATH: "data/sqlite/app.sqlite3"
       UPMON_TSDB_DIR: "data/tsdb"
@@ -140,49 +179,46 @@ Start:
 docker compose up -d
 ```
 
-## Updating
+---
 
-Before updating, it’s recommended to back up your data directory (especially `data/sqlite/app.sqlite3`).
-
-```bash
-docker compose pull
-docker compose up -d
-```
-
-## Data persistence (important)
+## Data Persistence (important)
 
 All runtime state lives under `/app/data`:
 
-- SQLite DB: users/settings/targets
-- TSDB: metrics data
-- Generated reports
+- SQLite database (users, settings, targets)
+- Time series database (metrics)
+- Generated PDF reports
 
-If you don’t mount `/app/data`, you’ll lose everything on container recreation.
+> **Without a mounted volume, all data is lost on container recreation.**
 
-## Configuration reference (most used)
+---
 
-| Variable | Required | Default | Meaning |
-|---|---:|---|---|
+## Configuration Reference (most used)
+
+| Variable | Required | Default | Description |
+|----------|:--------:|---------|-------------|
 | `UPMON_ENCRYPTION_KEY` | yes | — | Encrypts secrets at rest (Fernet) |
 | `LOG_LEVEL` | no | `INFO` | Logging verbosity |
 | `PUID` / `PGID` | no | `1000` | File ownership for `/app/data` |
 | `JUSTUP_HOST` | no | `0.0.0.0` | Bind address |
 | `JUSTUP_PORT` | no | `8080` | Listen port |
-| `UPMON_QUALITY_TARGETS` | no | `1.1.1.1,8.8.8.8,9.9.9.9,www.de-cix.net,cloudflare.com` | Comma-separated hosts used by the “quality probe” |
+| `UPMON_QUALITY_TARGETS` | no | predefined | Hosts used for quality probe |
+
+---
 
 ## Troubleshooting
 
-### Container starts but can’t write data
+### Container starts but cannot write data
 
-- Ensure the host directory you mount to `/app/data` is writable.
-- Use `PUID`/`PGID` matching the directory owner.
+- Ensure the host directory mounted to `/app/data` is writable
+- Match `PUID` / `PGID` to directory ownership
 
-### “Missing encryption key” / startup aborts
+### Startup aborts with "missing encryption key"
 
-- `UPMON_ENCRYPTION_KEY` is mandatory.
-- Keep it stable across upgrades. Changing it can make stored secrets unreadable.
+- `UPMON_ENCRYPTION_KEY` is mandatory
+- Keep it stable across upgrades
 
 ### Healthcheck
 
-- `GET /health` should return `200 OK`.
+- `GET /health` must return `200 OK`
 - Logs: `docker logs -f justup`
