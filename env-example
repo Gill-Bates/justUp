@@ -1,0 +1,9 @@
+# justUp / Uptime Monitor
+LOG_LEVEL=INFO
+UPMON_QUALITY_TARGETS=1.1.1.1,8.8.8.8,9.9.9.9,www.de-cix.net,cloudflare.com # 5 Minimum, Only change it, if neccessary!
+
+# Storage
+UPMON_DATA_DIR=data/
+UPMON_DB_PATH=data/sqlite/app.sqlite3
+UPMON_TSDB_DIR=data/tsdb
+UPMON_ENCRYPTION_KEY="<generate_a_secure_random_key_and_place_it_here>" # head -c 24 /dev/urandom | base64 | tr -d '=+/' | cut -c1-32
