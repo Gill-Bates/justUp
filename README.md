@@ -54,7 +54,7 @@ justUp is a self-contained, Docker-first monitoring solution for websites and en
 - Lazy-loaded metrics (no heavy queries on page load)
 - Optional UTC display for consistent ops views
 
-[<img src="static/img/justup_1.png" alt="Screenshot" width="700">](static/img/justup_1.png)
+[<img src="static/img/justup_1.png" alt="Screenshot" width="800">](static/img/justup_1.png)
 
 
 ---
@@ -106,8 +106,9 @@ No manual cleanup. No data loss where it matters.
 - Rate-limited heavy operations
 - Suitable for audits, customers, and documentation
 
-[<img src="static/img/justup_2.png" alt="Screenshot" height="450">](static/img/justup_2.png)
-[<img src="static/img/justup_3.png" alt="Screenshot" height="450">](static/img/justup_3.png)
+[<img src="static/img/justup_2.png" alt="Screenshot" height="370">](static/img/justup_2.png)
+[<img src="static/img/justup_3.png" alt="Screenshot" height="370">](static/img/justup_3.png)
+[<img src="static/img/justup_4.png" alt="Screenshot" height="370">](static/img/justup_4.png)
 
 ---
 
