@@ -6,7 +6,7 @@
 
 [![Docker](https://img.shields.io/badge/Docker-gill--bates%2Fjustup-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/giiibates/justup)
 [![License](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.1.0-blue.svg)](https://github.com/giiibates/justup/releases)
+[![Version](https://img.shields.io/badge/Version-1.1.4-blue.svg)](https://github.com/gill-bates/justup-dev/releases)
 
 Seriously – why another monitoring tool?
 
@@ -46,6 +46,12 @@ justUp is a self-contained, Docker-first monitoring solution for websites and en
 > Uptime is derived from **exactly one primary check** per target  
 > (HTTP → Ping → TCP, in that order). Other checks provide context, not ambiguity.
 
+### Notifications
+- **Integrated Signal Client** – secure push notifications via Signal messenger (no external dependencies)
+- **Customizable Email Alerts** – HTML email templates with branding and custom styling
+- Multiple notification channels per target
+- Flexible recipient management
+
 ---
 
 ### Dashboard & UI
@@ -60,8 +66,10 @@ justUp is a self-contained, Docker-first monitoring solution for websites and en
 ---
 
 ### Alerts & Notifications
+- **Integrated Signal Client** for secure mobile notifications
+- **Customizable Email Alerts** with template support
 - Reliable alerting with escalation support
-- Signal integration (extensible by design)
+- Flexible notification channels (Signal, Email)
 - Recipients and per-target routing
 - Acknowledgement workflow
 
@@ -116,6 +124,7 @@ No manual cleanup. No data loss where it matters.
 
 - Docker Engine (Docker Compose recommended)
 - Persistent volume for `/app/data`
+- **Supported Architectures:** linux/amd64, linux/arm64
 
 ---
 
@@ -166,18 +175,20 @@ services:
     restart: unless-stopped
     ports:
       - "8080:8080"
+    security_opt:
+      - no-new-privileges:true
     environment:
       PUID: "1000"
       PGID: "1000"
       LOG_LEVEL: "INFO"
-      UPMON_ENCRYPTION_KEY: "<YOUR_FERNET_KEY>"
-      UPMON_DATA_DIR: "data/"
-      UPMON_DB_PATH: "data/sqlite/app.sqlite3"
-      UPMON_TSDB_DIR: "data/tsdb"
+      UPMON_ENCRYPTION_KEY: "<YOUR_FERNET_KEY>" # Generate with: head -c 32 /dev/urandom | base64
+    volumes:
+      - /opt/docker/justup:/app/data
+      UPMON_QUALITY_TARGETS: "1.1.1.1,8.8.8.8,9.9.9.9,cloudflare.com"
     volumes:
       - ./justup-data:/app/data
     healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://localhost:8080/health"]
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
       interval: 30s
       timeout: 5s
       retries: 3
