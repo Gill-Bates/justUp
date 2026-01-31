@@ -19,9 +19,3 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
-    networks:
-      cloudnet:
-        ipv4_address: 10.30.0.14
-networks:
-  cloudnet:
-    external: true
