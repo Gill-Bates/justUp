@@ -8,8 +8,7 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/giiibates/justup?logo=docker&logoColor=white)](https://hub.docker.com/r/giiibates/justup)
 [![Docker Image Size](https://img.shields.io/docker/image-size/giiibates/justup/latest?logo=docker&logoColor=white)](https://hub.docker.com/r/giiibates/justup)
 [![License](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](LICENSE)
-[![GitHub Release](https://img.shields.io/github/v/release/Gill-Bates/justUp?logo=github)](https://github.com/Gill-Bates/justUp/releases)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/Gill-Bates/justup-dev/docker-build.yml?branch=v1.1.6&logo=github)](https://github.com/Gill-Bates/justup-dev/actions)
+[![Platform](https://img.shields.io/badge/Platform-linux%2Famd64%20|%20linux%2Farm64-lightgrey?logo=linux&logoColor=white)](https://hub.docker.com/r/giiibates/justup)
 
 Seriously – why another monitoring tool?
 
