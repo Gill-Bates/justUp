@@ -4,9 +4,12 @@
   <img src="static/img/justup.png" alt="justUp Logo" width="200">
 </p>
 
-[![Docker](https://img.shields.io/badge/Docker-gill--bates%2Fjustup-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/giiibates/justup)
+[![Docker Hub](https://img.shields.io/docker/v/giiibates/justup?label=Docker%20Hub&logo=docker&logoColor=white)](https://hub.docker.com/r/giiibates/justup)
+[![Docker Pulls](https://img.shields.io/docker/pulls/giiibates/justup?logo=docker&logoColor=white)](https://hub.docker.com/r/giiibates/justup)
+[![Docker Image Size](https://img.shields.io/docker/image-size/giiibates/justup/latest?logo=docker&logoColor=white)](https://hub.docker.com/r/giiibates/justup)
 [![License](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.1.4-blue.svg)](https://github.com/gill-bates/justup-dev/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/Gill-Bates/justUp?logo=github)](https://github.com/Gill-Bates/justUp/releases)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/Gill-Bates/justup-dev/docker-build.yml?branch=v1.1.6&logo=github)](https://github.com/Gill-Bates/justup-dev/actions)
 
 Seriously – why another monitoring tool?
 
