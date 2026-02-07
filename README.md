@@ -1,8 +1,12 @@
 # justUp
 
 <p align="center">
-  <img src="static/img/justup.png" alt="justUp Logo" width="200">
+  <img src="static/img/justup-black.svg#gh-light-mode-only" width="400">
+  <img src="static/img/justup-white.svg#gh-dark-mode-only" width="400">
 </p>
+
+<h2 align="center">Uptime Monitor – done right!</h2>
+<br>
 
 [![Docker Hub](https://img.shields.io/docker/v/giiibates/justup?label=Docker%20Hub&logo=docker&logoColor=white)](https://hub.docker.com/r/giiibates/justup)
 [![Docker Pulls](https://img.shields.io/docker/pulls/giiibates/justup?logo=docker&logoColor=white)](https://hub.docker.com/r/giiibates/justup)
