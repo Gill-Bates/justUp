@@ -20,6 +20,8 @@ Seriously – why another monitoring tool?
 
 justUp is a self-contained, Docker-first monitoring solution for websites and endpoints, designed to be simple to operate, efficient in storage, and professional in output — without external databases, agents, or Grafana stacks.
 
+[![LIVE DEMO](https://img.shields.io/badge/🚀%20LIVE-DEMO-00c853?style=for-the-badge)](https://justup.cirrio.de)
+
 ---
 
 ## What makes justUp different
