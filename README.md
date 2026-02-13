@@ -1,5 +1,3 @@
-# justUp
-
 <p align="center">
   <img src="static/img/justup-black.svg#gh-light-mode-only" width="400">
   <img src="static/img/justup-white.svg#gh-dark-mode-only" width="400">
